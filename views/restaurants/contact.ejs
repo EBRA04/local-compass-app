@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Local Compass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        0% {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes gradient-shift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      .animate-slideInLeft {
+        animation: slideInLeft 0.8s ease-out forwards;
+      }
+      .animate-slideInRight {
+        animation: slideInRight 0.8s ease-out forwards;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #3b82f6, #1d4ed8, #2563eb, #1e40af);
+        background-size: 400% 400%;
+        animation: gradient-shift 6s ease infinite;
+      }
+
+      .glass {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+      }
+
+      .admin-badge {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 8px;
+      }
+
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+      }
+
+      .nav-link {
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #3b82f6;
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+      }
+
+      .stagger-1 {
+        animation-delay: 0.1s;
+      }
+      .stagger-2 {
+        animation-delay: 0.2s;
+      }
+      .stagger-3 {
+        animation-delay: 0.3s;
+      }
+      .stagger-4 {
+        animation-delay: 0.4s;
+      }
+      .stagger-5 {
+        animation-delay: 0.5s;
+      }
+
+      .contact-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .contact-card:hover {
+        transform: translateY(-12px) scale(1.05);
+        box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
+      }
+
+      .contact-icon {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        animation: float 4s ease-in-out infinite;
+      }
+
+      .form-input {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      .form-input:focus {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen"
+  >
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 glass border-b border-white/20">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex justify-between items-center">
+          <!-- Left Logo -->
+          <div class="flex items-center space-x-2 animate-slideInLeft">
+            <div class="text-2xl">🧭</div>
+            <h1
+              class="text-2xl font-bold gradient-bg bg-clip-text text-transparent"
+            >
+              Local Compass
+            </h1>
+          </div>
+
+          <!-- Centered navigation -->
+          <div class="absolute left-1/2 transform -translate-x-1/2">
+            <ul class="flex space-x-8 font-medium">
+              <li>
+                <a
+                  href="/"
+                  class="nav-link text-gray-700 hover:text-blue-600 transition-colors duration-300 stagger-1 animate-fadeInUp"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/restaurants"
+                  class="nav-link text-gray-700 hover:text-blue-600 transition-colors duration-300 stagger-2 animate-fadeInUp"
+                  >Restaurants</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/contact"
+                  class="nav-link text-blue-600 font-semibold transition-colors duration-300 stagger-3 animate-fadeInUp"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right section empty for future actions -->
+          <div class="flex items-center space-x-4 animate-slideInRight"></div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="md:hidden flex justify-between items-center">
+          <!-- Logo -->
+          <div class="flex items-center space-x-2 animate-slideInLeft">
+            <div class="text-2xl">🧭</div>
+            <h1
+              class="text-2xl font-bold gradient-bg bg-clip-text text-transparent"
+            >
+              Local Compass
+            </h1>
+          </div>
+
+          <!-- Mobile menu button -->
+          <button
+            id="mobile-menu-button"
+            class="text-gray-700 hover:text-blue-600 transition-colors"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+          <div class="flex flex-col space-y-3">
+            <div class="border-b pb-3 mb-3">
+              <div class="flex items-center justify-center mb-2">
+                <div
+                  class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold relative mr-3"
+                >
+                  U
+                </div>
+                <div class="text-center">
+                  <div
+                    class="text-sm font-semibold text-gray-800 flex items-center justify-center"
+                  >
+                    User Name
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="/"
+              class="text-gray-700 hover:text-blue-600 transition-colors text-center block"
+              >Home</a
+            >
+            <a
+              href="/restaurants"
+              class="text-gray-700 hover:text-blue-600 transition-colors text-center block"
+              >Restaurants</a
+            >
+            <a
+              href="/contact"
+              class="text-blue-600 font-semibold text-center block"
+              >Contact</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="max-w-6xl mx-auto px-6 pt-28 pb-12">
+      <!-- Header -->
+      <div class="text-center mb-16 animate-fadeInUp">
+        <div class="glass rounded-3xl p-8 shadow-2xl">
+          <div class="text-5xl mb-4 animate-float">📬</div>
+          <h1
+            class="text-4xl font-bold gradient-bg bg-clip-text text-transparent mb-4"
+          >
+            Get In Touch
+          </h1>
+          <p class="text-lg text-gray-600 mb-6">
+            Have questions or want to connect? I'd love to hear from you!
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Methods -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <!-- Email -->
+        <div
+          class="glass rounded-2xl shadow-xl contact-card animate-fadeInUp stagger-1"
+        >
+          <div class="p-8 text-center">
+            <div
+              class="contact-icon w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
+            >
+              📧
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Email</h3>
+            <p class="text-gray-600 mb-4">Drop us a line anytime</p>
+            <a
+              href="mailto:ibrahimyousef4@outlook.com"
+              class="btn-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg inline-block hover:shadow-xl transition-all duration-300"
+              >Send Email</a
+            >
+          </div>
+        </div>
+
+        <!-- GitHub -->
+        <div
+          class="glass rounded-2xl shadow-xl contact-card animate-fadeInUp stagger-2"
+        >
+          <div class="p-8 text-center">
+            <div
+              class="contact-icon w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
+            >
+              💻
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">GitHub</h3>
+            <p class="text-gray-600 mb-4">source code</p>
+            <a
+              href="https://github.com/ebra04"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg inline-block hover:shadow-xl transition-all duration-300"
+              >View Profile</a
+            >
+          </div>
+        </div>
+
+        <!-- LinkedIn -->
+        <div
+          class="glass rounded-2xl shadow-xl contact-card animate-fadeInUp stagger-3"
+        >
+          <div class="p-8 text-center">
+            <div
+              class="contact-icon w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6"
+            >
+              🔗
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">LinkedIn</h3>
+            <p class="text-gray-600 mb-4">Let's connect professionally</p>
+            <a
+              href="https://www.linkedin.com/public-profile/settings"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg inline-block hover:shadow-xl transition-all duration-300"
+              >Connect</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="max-w-2xl mx-auto animate-fadeInUp stagger-4">
+        <div class="glass rounded-3xl p-8 shadow-2xl">
+          <div class="text-center mb-8">
+            <h2
+              class="text-3xl font-bold gradient-bg bg-clip-text text-transparent mb-4"
+            >
+              Send a Message
+            </h2>
+            <p class="text-gray-600">
+              Fill out the form below and I'll get back to you as soon as
+              possible
+            </p>
+          </div>
+
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  class="form-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  class="form-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Subject</label
+              >
+              <input
+                type="text"
+                class="form-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none"
+                placeholder="What's this about?"
+                required
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Message</label
+              >
+              <textarea
+                rows="6"
+                class="form-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none resize-none"
+                placeholder="Tell me what's on your mind..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn-primary text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Back to Home -->
+      <div class="text-center mt-12 animate-fadeInUp stagger-5">
+        <a
+          href="/"
+          class="btn-secondary text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-lg inline-flex items-center gap-2 hover:shadow-xl transition-all duration-300"
+        >
+          <span>←</span> Back to Home
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass border-t border-white/20 py-8 mt-20">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="flex items-center justify-center mb-4">
+          <div class="text-2xl mr-2">🧭</div>
+          <span
+            class="text-xl font-bold gradient-bg bg-clip-text text-transparent"
+            >Local Compass</span
+          >
+        </div>
+        <p class="text-gray-600 mb-2">
+          &copy; 2025 Local Compass. All rights reserved.
+        </p>
+        <p class="text-gray-500">Made with ❤️ for food lovers everywhere</p>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.getElementById("mobile-menu-button");
+      const menu = document.getElementById("mobile-menu");
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>
